@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+.property{
+background-image: radial-gradient(circle at center center, rgba(217, 217, 217,0.05) 0%, rgba(217, 217, 217,0.05) 15%,rgba(197, 197, 197,0.05) 15%, rgba(197, 197, 197,0.05) 34%,rgba(178, 178, 178,0.05) 34%, rgba(178, 178, 178,0.05) 51%,rgba(237, 237, 237,0.05) 51%, rgba(237, 237, 237,0.05) 75%,rgba(138, 138, 138,0.05) 75%, rgba(138, 138, 138,0.05) 89%,rgba(158, 158, 158,0.05) 89%, rgba(158, 158, 158,0.05) 100%),radial-gradient(circle at center center, rgb(255,255,255) 0%, rgb(255,255,255) 6%,rgb(255,255,255) 6%, rgb(255,255,255) 12%,rgb(255,255,255) 12%, rgb(255,255,255) 31%,rgb(255,255,255) 31%, rgb(255,255,255) 92%,rgb(255,255,255) 92%, rgb(255,255,255) 97%,rgb(255,255,255) 97%, rgb(255,255,255) 100%); background-size: 42px 42px;
+background-attachment:fixed;
+}
+.fillOutPage{
+background-image: radial-gradient(circle at center center, rgba(217, 217, 217,0.05) 0%, rgba(217, 217, 217,0.05) 15%,rgba(197, 197, 197,0.05) 15%, rgba(197, 197, 197,0.05) 34%,rgba(178, 178, 178,0.05) 34%, rgba(178, 178, 178,0.05) 51%,rgba(237, 237, 237,0.05) 51%, rgba(237, 237, 237,0.05) 75%,rgba(138, 138, 138,0.05) 75%, rgba(138, 138, 138,0.05) 89%,rgba(158, 158, 158,0.05) 89%, rgba(158, 158, 158,0.05) 100%),radial-gradient(circle at center center, rgb(255,255,255) 0%, rgb(255,255,255) 6%,rgb(255,255,255) 6%, rgb(255,255,255) 12%,rgb(255,255,255) 12%, rgb(255,255,255) 31%,rgb(255,255,255) 31%, rgb(255,255,255) 92%,rgb(255,255,255) 92%, rgb(255,255,255) 97%,rgb(255,255,255) 97%, rgb(255,255,255) 100%); background-size: 42px 42px;
+height: 100vh;
+}
+.adminLoginPage {
+  background-image: url('https://img.freepik.com/free-vector/white-abstract-background_23-2148810353.jpg?t=st=1718347069~exp=1718350669~hmac=fc7b2c35f6d7b71c458a1960298003924a75398c48d1be7e0a2e80139314a2cc&w=826');
+  background-repeat: no-repeat;
+  background-size: cover; /* This makes the image cover the entire element */
+  background-position: center; /* This centers the image */
+  height: 100vh;
+  width: 100vw; /* Ensure the width is set to 100% of the viewport width */
+}
+
+.adminCard{
+  background: url('https://as2.ftcdn.net/v2/jpg/03/38/80/27/1000_F_338802769_VZcSK4r01AK1DbAUmwFrOalya5IWYYut.jpg');
+}
+
+.adminHome{
+  background-image: linear-gradient(16deg, rgba(116, 116, 116,0.02) 0%, rgba(116, 116, 116,0.02) 25%,transparent 25%, transparent 96%,rgba(177, 177, 177,0.02) 96%, rgba(177, 177, 177,0.02) 100%),linear-gradient(236deg, rgba(148, 148, 148,0.02) 0%, rgba(148, 148, 148,0.02) 53%,transparent 53%, transparent 59%,rgba(56, 56, 56,0.02) 59%, rgba(56, 56, 56,0.02) 100%),linear-gradient(284deg, rgba(16, 16, 16,0.02) 0%, rgba(16, 16, 16,0.02) 46%,transparent 46%, transparent 71%,rgba(181, 181, 181,0.02) 71%, rgba(181, 181, 181,0.02) 100%),linear-gradient(316deg, rgba(197, 197, 197,0.02) 0%, rgba(197, 197, 197,0.02) 26%,transparent 26%, transparent 49%,rgba(58, 58, 58,0.02) 49%, rgba(58, 58, 58,0.02) 100%),linear-gradient(90deg, rgb(255,255,255),rgb(255,255,255));
+}
+.AdminHomeB{
+  background-color: #edeafb;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+.cursor-not-allowed{
+  cursor: not-allowed;
+} 
+.branddesc{
+  font-family: 'Bebas Neue';
+}
+.aspect-ratio-4-3{
+  height: 0;
+  aspect-ratio: 4/3;
+}
+.pnewpolicy:hover{
+  text-decoration:underline !important;
+   color: black !important;
+  background-color: rgb(219, 238, 243) !important;
+} 
+
+
+.tra
+{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: not-allowed;
+  color: inherit;
+  font-size: inherit;
+}
+.DetailPic{
+  width: 16rem;
+  height: 11rem;
+  position: absolute;
+  right: 2rem;
+  top: 12rem;
+}
+.LHomeImg{
+  position: absolute;
+  top: 12rem;
+  left: 4rem;
+  height: 35vh;
+}
+.ramana{
+  width: 200px;
+}
+.pay{
+  background-image: repeating-linear-gradient(135deg, rgba(240, 240, 240,0.02) 0px, rgba(240, 240, 240,0.02) 21px,rgba(224, 224, 224,0.02) 21px, rgba(224, 224, 224,0.02) 42px,rgba(208, 208, 208,0.02) 42px, rgba(208, 208, 208,0.02) 63px,rgba(192, 192, 192,0.02) 63px, rgba(192, 192, 192,0.02) 84px,rgba(175, 175, 175,0.02) 84px, rgba(175, 175, 175,0.02) 105px,rgba(159, 159, 159,0.02) 105px, rgba(159, 159, 159,0.02) 126px,rgba(143, 143, 143,0.02) 126px, rgba(143, 143, 143,0.02) 147px,rgba(127, 127, 127,0.02) 147px, rgba(127, 127, 127,0.02) 168px),repeating-linear-gradient(45deg, rgba(232, 232, 232,0.02) 0px, rgba(232, 232, 232,0.02) 21px,rgba(209, 209, 209,0.02) 21px, rgba(209, 209, 209,0.02) 42px,rgba(185, 185, 185,0.02) 42px, rgba(185, 185, 185,0.02) 63px,rgba(162, 162, 162,0.02) 63px, rgba(162, 162, 162,0.02) 84px,rgba(138, 138, 138,0.02) 84px, rgba(138, 138, 138,0.02) 105px,rgba(115, 115, 115,0.02) 105px, rgba(115, 115, 115,0.02) 126px,rgba(91, 91, 91,0.02) 126px, rgba(91, 91, 91,0.02) 147px,rgba(68, 68, 68,0.02) 147px, rgba(68, 68, 68,0.02) 168px),linear-gradient(90deg, #ffffff,#ffffff);
+}
+.buy{
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.buy:hover {
+  transform: scale(1.01);
+  border-color: #fff9;
+}
+
+.buy:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.buy::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.hover-button {
+  position: relative;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.hover-button:hover .default-text {
+  transform: translateX(100%);
+}
+
+.hover-button:hover .hover-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.default-text,
+.hover-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.default-text {
+  z-index: 1;
+}
+
+.hover-text {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.custom-bullet {
+  list-style-type: none;
+}
+
+/* Define the bullet as a green circle */
+.custom-bullet li::before {
+  content: '\25BA';
+  color: orange; /* Green color */
+  font-size: 1.2em; /* Adjust size if needed */
+  margin-right: 0.5em; /* Adjust spacing */
+}
+
+.fixed{
+  position: fixed;
+  top: 0;
+  left: 0; 
+  width: 100%;
+  z-index: 999;
+  border-radius: 10px;
+  }
+
+  .gqcards{
+    overflow: scroll;
+  }
+  
+
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  60% {
+    left: 100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+@media (max-width:768px){
+  .company{
+    display:none;
+  }
+  .fixed{
+  position: fixed;
+  top: 0;
+  left: 0; 
+  width: 100%;
+  z-index: 999;
+  border-radius: 10px;
+  }
+  .line{
+    border-right:none !important;
+  }
+}
+@media (min-width:250px) and (max-width:415px){
+  .DetailPic{
+    display: none !important;
+  }
+  .FillPropertyLeft{
+    border: none !important;
+  }
+  .FillDOB{
+    width: 10rem;
+    margin-left: 2rem !important;
+  }
+  .FillDOBInput{
+    width: 10rem;
+    padding: 0.5rem;
+  }
+  .FillMailMob{
+    display: flex;
+    flex-direction: column;
+  }
+  .sdborder{
+    border: none !important;
+  }
+  .sdErrmsg{
+    margin: 0 !important;
+    overflow: scroll;
+  }
+  .care{
+    height: 5rem !important;
+  }
+  .LHomeImg{
+    position: absolute;
+    top: 15rem;
+    left: 0.5rem;
+    height: 10rem;
+  }
+  .lcdiv{
+    height: 50vh !important;
+  }
+  .lbdiv{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center;
+    width: 100vw !important;
+  }
+  .lbmail{
+    overflow: scroll;
+  }
+}
+@media (min-width:400px) and (max-width:800px){
+  .DetailPic{
+    display: none !important;
+  }
+  .FillPropertyLeft{
+    border: none !important;
+  }
+  .sdborder{
+    border: none !important;
+  }
+  .sdErrmsg{
+    margin: 0 !important;
+    overflow: scroll;
+  }
+  .care{
+    height: 8rem !important;
+  }
+  .gqfcol{
+    display: flex;
+    flex-direction: column;
+    margin-left: 4rem;
+  }
+  .LHomeImg{
+    position: absolute;
+    top: 15rem;
+    left: 0.5rem;
+    height: 12rem;
+  }
+  .lcdiv{
+    height: 50vh !important;
+  }
+  .lbdiv{
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center;
+    width: 100vw !important;
+  }
+}
+@media (min-width:800px) and (max-width:1000px){
+  .DetailPic{
+    display: none !important;
+  }
+  .sdborder{
+    border: none !important;
+  }
+  .gqfcol{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5rem;
+  }
+  .care{
+    height: 10rem !important;
+  }
+  .LHomeImg{
+    position: absolute;
+    top: 15rem;
+    left: 0.5rem;
+    height: 14rem;
+  }
+  .lcdiv{
+    height: 35vh !important;
+  }
+}
