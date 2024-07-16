@@ -166,12 +166,24 @@ var emailId=location.state?.emailId;
       
      }
   }
-  function HandleMarketValue(e){
-     const inputValue = e.target.value;
-     if (inputValue.length <=9){
+  function HandleMarketValue(e) {
+    const inputValue = e.target.value;
+  
+    // If input is empty, allow it to update
+    if (inputValue === "") {
       onSubmit(e);
-     }
+      return;
+    }
+  
+    // Check the length and numerical value
+    if (inputValue.length <= 10) {
+      const numericalValue = parseFloat(inputValue.replace(/,/g, ''));
+      if (numericalValue <= 1000000000) {
+        onSubmit(e);
+      }
+    }
   }
+
   function HandleSqftValue(e){
      const inputValue = e.target.value;
      if (inputValue.length <=5){
@@ -186,7 +198,12 @@ var emailId=location.state?.emailId;
   }
 
   const convertToText = (num) => {
-    return numWords(num);
+    try {
+      return numWords(num);
+    } catch (error) {
+      console.error("Error converting number to words:", error);
+      return "hundred crore";
+    }
   };
 
 
@@ -217,8 +234,13 @@ var emailId=location.state?.emailId;
           value={values.marketValue}
           onChange={HandleMarketValue}
           onKeyPress={(e) => {
+            const { key, target: { value } } = e;
+            if (value === '' && key === '0') {
+              e.preventDefault();
+              return;
+            }
             const isValidInput = /[0-9]/;
-            if (!isValidInput.test(e.key)) {
+            if (!isValidInput.test(key)) {
               e.preventDefault();
             }
           }}

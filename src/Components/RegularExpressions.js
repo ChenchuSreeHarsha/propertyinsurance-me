@@ -1,7 +1,7 @@
 export const integerRege =  new RegExp(/^\d+$/);
 export const integerRege6 =  new RegExp(/^\d{6}$/);
 export const regexpropertyValues = new RegExp(/^[1-9][0-9]{2,}$/);
-export const regexmarketValue = new RegExp( /^[1-9][0-9]{5,}$/);
+export const regexmarketValue = new RegExp(/^(?:[1-9][0-9]{5,8}|1000000000)$/);
 export const pincode=new RegExp(/^[1-9]{1}[0-9]{5}$/);
 
 export const regexUsername = new RegExp(/^[A-Za-z][A-Za-z. ]{1,40}[A-Za-z. ]$/);

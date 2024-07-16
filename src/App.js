@@ -20,6 +20,7 @@ import AdminNotificationsPage from './Components/Admin/AdminNotifications';
 import AdminLoginCredentials from './Components/Admin/AdminLoginCredentials';
 import PremiumAccess from './Components/Admin/AdminPremium';
 import 'react-toastify/dist/ReactToastify.css';
+import ContextMain from './Components/UseContext/ContextMain';
 
 const clientId = "246541673533-e90kj0pumgndrmt51j27v853d3pkon00.apps.googleusercontent.com";
 
@@ -41,6 +42,7 @@ function App() {
   return (
     <div >
       <Router>
+        <ContextMain>
         <div>
           <Routes>
             <Route exact path="/" element={<Login/>}/>
@@ -62,8 +64,9 @@ function App() {
             <Route path="/adminpremium" element={<PremiumAccess/>}/>
           </Routes>
         </div>
+        </ContextMain>
       </Router>
-    <ToastContainer autoClose={false}/>
+    <ToastContainer autoClose={5000}/>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import {  integerRege6, regexHouseNo, regexPanCard, regexStreet, regexUsername } from './RegularExpressions';
 import PropertyInsuranceService from './Service/PropertyInsuranceService';
@@ -8,6 +8,7 @@ import { TextField } from '@mui/material';
 import '../App.css';
 import HomeDetailPic from './images/p7.jpg';
 import Header from './Header';
+import { RsContextCreater } from './UseContext/ContextMain';
 
 
 function FilldetailsPage() 
@@ -16,6 +17,8 @@ function FilldetailsPage()
   useEffect(()=>{
     window.scrollTo(0,0);
   },[])
+
+  const {detailsCon} = useContext(RsContextCreater);
 
   const location = useLocation();
   const { state } = location;
@@ -31,6 +34,11 @@ function FilldetailsPage()
   const pincode = state?.pincode;
   const person = state?.person;
   const effected = state?.effected;
+  const loginMobileNumber = state?.inputMoboleNo;
+  const loginMobileNumberCon = detailsCon.inputMoboleNo;
+
+  console.log(loginMobileNumber);
+  console.log("from con"+loginMobileNumberCon);
 
   var mobileno = location.state?.mobileno; // from profile page
   var emailId=location.state?.emailId;
@@ -41,8 +49,8 @@ function FilldetailsPage()
 
   const [data, setData] = useState(
     {
-      mobno:formData?.mobileno,
-      gender:"",
+      mobno : formData?.mobileno || loginMobileNumber || location.state?.mobileno || '',
+      gender:"", 
       fullname:"",
       pancard:"",
       dob:"",
@@ -60,6 +68,12 @@ function FilldetailsPage()
       paymentId: '',
     }
   );
+
+  const [signUpDetails1, setSignUpDetails1] = useState(null);
+ 
+
+
+// console.log(signUpDetails1,"login:"+loginMobileNumber,"ploi:"+mobileno,"form"+formData.mobileno,'mob'+MobileNumber);
 
 
   const [validationErrors,setValidationErrors]=useState(
@@ -304,11 +318,15 @@ useEffect(() => {
    {
     setshowState(true);
    }
-      e.preventDefault(); 
-      console.log(data.mobno);
+      // console.log(data.mobno);
+      console.log(data);
       // return; // Stop further execution
     
-
+data.gender = signUpDetails1.gender;
+data.fullname = signUpDetails1.fullname;
+data.pancard = signUpDetails1.pancard;
+data.dob = setSignUpDetails1.dob;
+console.log(data);
   if(data.currentaddress === "yes" && regexUsername.test(data.fullname) && regexPanCard.test(data.pancard) && regexHouseNo.test(data.propertyhouseNo) && regexStreet.test(data.propertystreetNo) && data.mobno!== ("" || undefined))
   {
      navigate("/payment",{state:{marketValue,security,squareFeet,buildingAge,pincode,person,effected,startingCustomerId,formData,premiumData,userDetails : data}});
@@ -339,6 +357,66 @@ useEffect(() => {
     navigate("/property",{state:{i}});
    }
   }
+
+  console.log(signUpDetails1,"login:"+loginMobileNumber,"ploi:"+mobileno,"form"+formData.mobileno,'mob'+MobileNumber);
+
+  const isExistingUser = !!signUpDetails1;
+  const isNewUser = !isExistingUser;
+
+  // useEffect(() => {
+  //   const LogMobNo = loginMobileNumber || mobileno || MobileNumber || loginMobileNumberCon;
+
+  //   if (LogMobNo) {
+  //     const fetchDetails = async () => {
+  //       try {
+  //         const res = await PropertyInsuranceService.findlogincustomeDetails(LogMobNo);
+  //         setSignUpDetails1(res.data);
+  //       } catch (error) {
+  //         console.error('Error fetching details:', error);
+  //       }
+  //     };
+
+  //     fetchDetails();
+  //   } else {
+  //     // Reset form for new user sign up
+  //     setSignUpDetails1(null);
+  //     setData({
+  //       gender: '',
+  //       fullname: formData?.name,
+  //       pancard: '',
+  //       dob: '',
+  //       mobno: mobileno || MobileNumber || loginMobileNumber || loginMobileNumberCon || '',
+  //     });
+  //   }
+  // }, [loginMobileNumber, mobileno, MobileNumber, loginMobileNumberCon, formData]);
+
+  useEffect(() => {
+    const LogMobNo = loginMobileNumber || mobileno || MobileNumber || loginMobileNumberCon;
+
+    if (LogMobNo) {
+      const fetchDetails = async () => {
+        try {
+          const res = await PropertyInsuranceService.findlogincustomeDetails(LogMobNo);
+          setSignUpDetails1(res.data);
+        } catch (error) {
+          console.error('Error fetching details:', error);
+        }
+      };
+
+      fetchDetails();
+    } else {
+      // Reset form for new user sign up
+      setSignUpDetails1(null);
+      setData({
+        gender: '',
+        fullname: formData?.name,
+        pancard: '',
+        dob: '',
+        mobno: mobileno || MobileNumber || loginMobileNumber || loginMobileNumberCon || '',
+      });
+    }
+  }, [loginMobileNumber, mobileno, MobileNumber, loginMobileNumberCon, formData]);
+
 
 
   return (
@@ -375,96 +453,203 @@ useEffect(() => {
         </div>
       </div> 
 
-      <div class="col-lg-9 col-md-8 col-sm-6 col-12">
+      <div className="col-lg-9 col-md-8 col-sm-6 col-12">
             <div className='mt-2'>
               <form  onSubmit={handleSubmit} className='form-horizatol' >
                 <img src={HomeDetailPic} alt='Pic' className='rounded DetailPic'/>
-                <div className=''>
-                  <h3 className='text-center text-light rounded mx-1' style={{background:'#318ce7'}}>PAN Card Details<i className="fa-solid fa-address-card fa-sm ms-2"></i></h3>
-                  <div className='mt-4 mb-3 row'>
-                    <select id='salutation' name='gender' value={data.gender} required className='form-select ms-3 p-2 fw-semibold' onChange={handleChange} style={{width:'7rem'}}>
-                    <option selected value=''>Salutation</option>
-                    <option value='Mr'>Mr.</option>
-                    <option value='Mrs'>Mrs.</option>
-                    <option value='Ms'>Ms.</option>
-                  </select>
-                  <TextField
-                    className='col-7 col-lg-5 ms-2'
-                    id="outlined-textarea"
-                    label="Full Name(As per Pan Card)"
-                    placeholder="Enter Your Name"
-                    name='fullname'
-                    required
-                    value={data.fullname.toUpperCase()}
-                    onChange={handleChange}
-                    onKeyPress={(e) => {
-                      // Prevent input if the key pressed is not a number
-                      const onlyNumbers = /^[A-Za-z]+( [A-Za-z]+)*$/;
-                      if (!onlyNumbers.test(e.key)) {
-                        e.preventDefault();
-                      }}}
-                    inputProps={{ maxLength: 40 }}
-                    /><br/>
-                    {validationErrors.fullname && <span className="text-danger">{validationErrors.fullname}</span>}
+                <>
+      {isExistingUser ? (
+        <div className=''>
+          <h3 className='text-center text-light rounded mx-1' style={{ background: '#318ce7' }}>
+            PAN Card Details<i className="fa-solid fa-address-card fa-sm ms-2"></i>
+          </h3>
 
-                  </div>
+          <div className='mt-4 mb-3 row'>
+            <select
+              id='salutation'
+              name='gender'
+              value={signUpDetails1?.gender}
+              required
+              className='form-select ms-3 p-2 fw-semibold bg-light text-secondary'
+              disabled
+            >
+              <option value={signUpDetails1?.gender}>{signUpDetails1?.gender}</option>
+            </select>
+            <TextField
+              className='col-7 col-lg-5 ms-2'
+              id="outlined-textarea"
+              label="Full Name(As per Pan Card)"
+              placeholder="Enter Your Name"
+              name='fullname'
+              required
+              value={signUpDetails1?.fullname}
+              disabled
+              inputProps={{ maxLength: 40 }}
+            />
+            {validationErrors.fullname && <span className="text-danger">{validationErrors.fullname}</span>}
+          </div>
 
-                  <div className=' row'>
-                    <div className='col-lg-3'>
-                    <TextField
-                      className='col-12 '
-                      id="outlined-textarea"
-                      label="PAN Card No"
-                      placeholder="Enter Your PAN No."
-                      name='pancard'
-                      required
-                      value={data.pancard.toUpperCase()}
-                      onChange={handleChange}
-                      inputProps={{ maxLength: 10 }}
-                    /><br/>
-                    {validationErrors.pancard && <span className="text-danger">{validationErrors.pancard}</span>}
+          <div className='row'>
+            <div className='col-lg-3'>
+              <TextField
+                className='col-12'
+                id="outlined-textarea"
+                label="PAN Card No"
+                placeholder="Enter Your PAN No."
+                name='pancard'
+                required
+                value={signUpDetails1?.pancard}
+                disabled
+                inputProps={{
+                  maxLength: 10,
+                  className: 'fw-bold'
+                }}
+              />
+              {validationErrors.pancard && <span className="text-danger">{validationErrors.pancard}</span>}
+            </div>
+            <div className='col-12 col-lg-7 mb-2'>
+              <label className="control-label w-50 mt-2">
+                <span className='fw-semibold text-secondary'>Date of Birth</span>
+                <input
+                  type='date'
+                  name='dob'
+                  min="1924-01-01"
+                  max={minDateFormatted}
+                  value={signUpDetails1?.dob}
+                  required
+                  className='p-1 rounded ms-1 fw-semibold'
+                  disabled
+                />
+              </label>
+              {validationErrors.dob && <span className="text-danger">{validationErrors.dob}</span>}
+            </div>
+          </div>
 
-                    </div>
-                    <div className=' col-12 col-lg-7 mb-2'>
-                    <label className="control-label w-50 mt-2" ><span className='fw-semibold text-secondary FillDOB'>Date of Birth</span>
-                   <input type='date'
-                       name='dob'  min="1924-01-01" 
-                       max={minDateFormatted}  
-                       value={data.dob} 
-                       required 
-                       className='FillDOBInput p-1 rounded ms-1' 
-                       onChange={handleChange} 
-                       />  
-                       </label><br/>
-                    {validationErrors.dob && <span className="text-danger">{validationErrors.dob}</span>}
-                    </div>
+          <div className='mt-1'>
+            <TextField
+              className='mt-2 col-12 col-lg-4 pe-lg-3 cursor-no-drop'
+              id="outlined-disabled-input"
+              label="Email-Id"
+              value={formData?.email || signUpDetails1?.email || emailId || emailData}
+              disabled
+              InputProps={{
+                className: 'fw-bold'
+              }}
+            />
+            <TextField
+              className='col-12 col-lg-3 mt-2 cursor-no-drop'
+              id="outlined-disabled-input"
+              label="Mobile No"
+              value={formData?.mobileno || signUpDetails1?.mobileno || mobileno || MobileNumber || loginMobileNumber || loginMobileNumberCon}
+              disabled
+              InputProps={{
+                className: 'fw-bold'
+              }}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className=''>
+          <h3 className='text-center text-light rounded mx-1' style={{ background: '#318ce7' }}>
+            PAN Card Details<i className="fa-solid fa-address-card fa-sm ms-2"></i>
+          </h3>
 
-                  </div>
-                  <div className='mt-1'>
-                  <TextField
-                    className='mt-2 col-12 col-lg-4 pe-lg-3  cursor-no-drop'
-                    id="outlined-disabled-input"
-                    label="Email-Id"
-                    onChange={handleChange}
-                    defaultValue={formData?.email || emailId || emailData}
-                    InputProps={{
-                      disabled: true,
-                      className:'fw-bold'
-                    }}
-                  />
-                  <TextField
-                    className='col-12 col-lg-3 mt-2 cursor-no-drop'
-                    id="outlined-disabled-input"
-                    label="Mobile No"
-                    onChange={handleChange}
-                    defaultValue={formData?.mobileno || mobileno || MobileNumber}
-                    InputProps={{
-                      disabled: true,
-                      className:'fw-bold',
-                    }}
-                  />
-                  </div>
-                </div>
+          <div className='mt-4 mb-3 row'>
+            <select
+              id='salutation'
+              name='gender'
+              value={data.gender}
+              required
+              className='form-select ms-3 p-2 fw-semibold bg-light text-secondary'
+              onChange={handleChange}
+              style={{ width: '7rem' }}
+            >
+              <option value=''>Salutation</option>
+              <option value='Mr'>Mr.</option>
+              <option value='Mrs'>Mrs.</option>
+              <option value='Ms'>Ms.</option>
+            </select>
+            <TextField
+              className='col-7 col-lg-5 ms-2'
+              id="outlined-textarea"
+              label="Full Name(As per Pan Card)"
+              placeholder="Enter Your Name"
+              name='fullname'
+              required
+              value={formData.name}
+              onChange={handleChange}
+              onKeyPress={(e) => {
+                const onlyLetters = /^[A-Za-z\s]*$/;
+                if (!onlyLetters.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              inputProps={{ maxLength: 40 }}
+            />
+            {validationErrors.fullname && <span className="text-danger">{validationErrors.fullname}</span>}
+          </div>
+
+          <div className='row'>
+            <div className='col-lg-3'>
+              <TextField
+                className='col-12'
+                id="outlined-textarea"
+                label="PAN Card No"
+                placeholder="Enter Your PAN No."
+                name='pancard'
+                required
+                value={data.pancard}
+                onChange={handleChange}
+                inputProps={{
+                  maxLength: 10,
+                  className: 'fw-bold'
+                }}
+              />
+              {validationErrors.pancard && <span className="text-danger">{validationErrors.pancard}</span>}
+            </div>
+            <div className='col-12 col-lg-7 mb-2'>
+              <label className="control-label w-50 mt-2">
+                <span className='fw-semibold text-secondary'>Date of Birth</span>
+                <input
+                  type='date'
+                  name='dob'
+                  min="1924-01-01"
+                  max={minDateFormatted}
+                  value={data.dob}
+                  required
+                  className='p-1 rounded ms-1 fw-semibold'
+                  onChange={handleChange}
+                />
+              </label>
+              {validationErrors.dob && <span className="text-danger">{validationErrors.dob}</span>}
+            </div>
+          </div>
+
+          <div className='mt-1'>
+            <TextField
+              className='mt-2 col-12 col-lg-4 pe-lg-3 cursor-no-drop'
+              id="outlined-disabled-input"
+              label="Email-Id"
+              value={formData?.email || emailId || emailData}
+              disabled
+              InputProps={{
+                className: 'fw-bold'
+              }}
+            />
+            <TextField
+              className='col-12 col-lg-3 mt-2 cursor-no-drop'
+              id="outlined-disabled-input"
+              label="Mobile No"
+              value={formData?.mobileno || mobileno || MobileNumber || loginMobileNumber || loginMobileNumberCon}
+              disabled
+              InputProps={{
+                className: 'fw-bold'
+              }}
+            />
+          </div>
+        </div>
+      )}
+    </>
                     
                 <div>
                   <h3 className='text-center my-3 rounded text-light px-2' style={{background:'#318ce7'}}>Property Details <i className="fa-solid fa-location-dot fa-sm"></i> </h3>

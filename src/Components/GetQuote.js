@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { regexEmail, regexMobileNo, regexPassword, regexUsername } from './RegularExpressions';
@@ -18,6 +18,7 @@ import {toast } from 'react-toastify';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import { FormHelperText } from '@mui/material';
+import { RsContextCreater } from './UseContext/ContextMain';
 
 
 function GetQuote() 
@@ -29,6 +30,8 @@ function GetQuote()
 
   const location = useLocation();
   const { state } = location;
+
+  const {setDetailsCon} = useContext(RsContextCreater);
 
   const [otpValues, setOtpValues] = useState(Array(4).fill(''));
   // const [enterotp,SetEnterOtp]=useState("");
@@ -597,6 +600,12 @@ const resendOTPMobile = (e) => {
       password: '',
       email: '',
     });
+
+    const [EmailOTPInput,setEmailshowOTPInput]=useState(false);
+    const [otpSentMail, setOtpSentMail] = useState(false);
+  const [resendActiveMail, setResendActiveMail] = useState(false);
+  const [timerMail, setTimerMail] = useState(20);
+  const [resendCountMail, setResendCountMail] = useState(0);
   
   const change=(e)=>
   {
@@ -617,6 +626,13 @@ const resendOTPMobile = (e) => {
 
         // validation for mobile no :
         if(name === "mobileno"){
+          setshowOTPInput(false);
+          setOtpSent(false);
+          setData('');
+          setTimer(0);
+          setmobileverified('send OTP');
+          setResendActive(false);
+          setResendCount(0);
           if(!regexMobileNo.test(value))
           {
             setValidationErrors({ ...validationErrors, [name]: "Phone must start with 6,7,8,9 series with  10 digits" });
@@ -627,6 +643,13 @@ const resendOTPMobile = (e) => {
 
           // validation for email :
           if(name === "email"){
+            setEmailshowOTPInput(false)
+            setOtpSentMail(false)
+            setTimerMail(0);
+            setData1('')
+            setemailverified('send OTP');
+            setResendActiveMail(false);
+            setResendCountMail(0);
             if(!regexEmail.test(value))
             {
               setValidationErrors({ ...validationErrors, [name]: "Please enter valid email ex: example@gmail.com" });
@@ -855,7 +878,7 @@ i++;
             // setshowState(true);
             //  navigate("",{state:{values:values}})
         
-            navigate("/fill", { state: { formData: values, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,startingCustomerId} })
+            navigate("/fill", { state: { formData: values, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,startingCustomerId,inputMoboleNo} })
             
           } 
           else 
@@ -893,12 +916,8 @@ i++;
         }); 
 
   const [MobileOTPInput,setMobileOTPInput]=useState(false);
-  const [EmailOTPInput,setEmailshowOTPInput]=useState(false);
 
-  const [otpSentMail, setOtpSentMail] = useState(false);
-  const [resendActiveMail, setResendActiveMail] = useState(false);
-  const [timerMail, setTimerMail] = useState(20);
-  const [resendCountMail, setResendCountMail] = useState(0);
+  
 
 
   useEffect(() => {
@@ -1048,6 +1067,11 @@ const[isemailverified, setisEmaailverified]=useState(false);
     setShowLogin(true);
   }
 
+  const HandleSignUpModal = () => {
+    setShowModal(true);
+    setShowLogin(false);
+  }
+
   const [otpValuesLogin, setOtpValuesLogin] = useState(['', '', '', '']);
   const [enterotpLogin,SetEnterOtpLogin]=useState("");
   const [otpLogin, setOtpLogin] = useState(['', '', '', '']); 
@@ -1079,6 +1103,8 @@ const[isemailverified, setisEmaailverified]=useState(false);
     mobileno: ''
   });
   console.log(valuesLogin);
+  const [newErr,setNewErr] = useState();
+
 
   const changeLogin=(e)=>
   {
@@ -1093,7 +1119,8 @@ const[isemailverified, setisEmaailverified]=useState(false);
         setButtonTextLogin('Send OTP');
         setButtonDisabledLogin(false);
         setTimerLogin(0);
-        setAttemptsLogin(0)
+        setAttemptsLogin(0);
+        setNewErr('')
       } else {
         setValidationErrorsLogin({ ...validationErrorsLogin, [name]: "" });
       }
@@ -1134,6 +1161,7 @@ const[isemailverified, setisEmaailverified]=useState(false);
       return () => clearInterval(interval);
     }, [timerLogin, buttonDisabledLogin]);
 
+
     const sendOTPLogin =async(e)=>{
       e.preventDefault();
       
@@ -1161,6 +1189,7 @@ const[isemailverified, setisEmaailverified]=useState(false);
                 PropertyInsuranceService.getOtp(mobileNumber,otpValue).then((res)=>
               {
                 console.log(res);
+                
               }).catch((err)=>
             {});
             }).catch((error)=>
@@ -1168,13 +1197,21 @@ const[isemailverified, setisEmaailverified]=useState(false);
 
           console.log(showOTPInputLogin);
             setshowOTPInputLogin(true);
+            setNewErr('');
             //  SetVerifyOtp("");
           }
           })
             }
+            else if(!valuesLogin.mobileno){
+              console.log('errrrrrrrrrrrrrrrrrrr');
+              // alert('enter mobile number')
+              // toast.error('Enter Mobile Number')
+              setNewErr('Please Enter Your Mobile Number');
+              setValidationErrors('');
+            }
             else {setDataLogin("")}
             }
-
+    const inputMoboleNo = valuesLogin.mobileno;
     const handleVerifyMobileNoOtpLogin = (e) => {
      e.preventDefault();
       const otp = otpValuesLogin.join('');
@@ -1183,15 +1220,20 @@ const[isemailverified, setisEmaailverified]=useState(false);
       {
         SetVerifyOtpLogin("Verified Successfully");
         setshowOTPInputLogin(false);
-        navigate('/fill',{state:{values:valuesLogin.mobileno}})
-        navigate("/fill", { state: { formData: feilds, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,mobileno,emailId,startingCustomerId} })
-    }
-    else{SetVerifyOtpLogin("Invalid OTP...!")}
+        // navigate('/fill',{state:{values:valuesLogin.mobileno}})
+        // navigate("/fill", { state: { formData: feilds, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,mobileno,emailId,startingCustomerId} })
+        navigate("/fill", { state: { formData: feilds, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,mobileno,emailId,startingCustomerId,inputMoboleNo} })
+        setDetailsCon((prev) => ({
+          ...prev,
+          inputMoboleNo
+        }));
+      }
+      else{SetVerifyOtpLogin("Invalid OTP...!")}
   };
 
   const HandleSignUpBtn = (e) => {
     e.preventDefault();
-    navigate("/fill", { state: { formData: feilds, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,mobileno,emailId,startingCustomerId} })
+    navigate("/fill", { state: { formData: feilds, premiumData: { year, Premium } ,  marketValue ,buildingAge , security , squareFeet ,pincode,person,effected,i,mobileno,emailId,startingCustomerId,inputMoboleNo} })
   }
   
   return (
@@ -1403,6 +1445,7 @@ const[isemailverified, setisEmaailverified]=useState(false);
                   <small>
                   {validationErrorsLogin.mobileno && <span className="text-danger">{validationErrorsLogin.mobileno}</span>}</small>
                   {dataLogin === "Mobile number is not exists" && <h4 className='text-danger mt-2 ms-lg-3'>{dataLogin}</h4>}
+                  <h6 className='text-danger mt-1'>{newErr}</h6>
                 {showOTPInputLogin && (
                   <div>
                      <div className='ms-2 mt-2 row d-flex justify-content-center'>
@@ -1440,6 +1483,9 @@ const[isemailverified, setisEmaailverified]=useState(false);
             </form>
             <button className='btn btn-outline-primary my-4' onClick={clickCloseLogin} >Close
             </button>
+            <div className='d-flex justify-content-center me-4'>
+              <span className='mt-2'>Don't you have account? </span><button className='btn btn-link'onClick={HandleSignUpModal}>Please SignUp</button> 
+            </div>
           </Modal.Body>   
         </Modal>
     </div>
@@ -1638,7 +1684,7 @@ const[isemailverified, setisEmaailverified]=useState(false);
                   <hr></hr>
                   <div className='d-flex justify-content-center me-4'>
                   <div className=''>
-                    <input type='submit' value="SignUp" className='btn btn-primary shadow px-5 fw-bold mb-2 shadow' onClick={HandleSignUpBtn}/>
+                    <input type='submit' value="SignUp" className='btn btn-primary shadow px-5 fw-bold mb-2 shadow'/>
                   </div>
                 </div>
                   <div className='d-flex justify-content-center me-4'>
